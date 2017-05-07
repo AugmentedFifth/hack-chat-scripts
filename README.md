@@ -21,3 +21,8 @@ The status of a user using this script can be displayed by typing this into the 
 ```
 @user status
 ```
+
+---
+
+Licensed under the
+[Affero General Public License v3.0](https://www.gnu.org/licenses/agpl-3.0.en.html).
