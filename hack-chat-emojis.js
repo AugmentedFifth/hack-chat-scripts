@@ -109,15 +109,20 @@
             const ns = mutation.addedNodes;
             ns.forEach(n => {
                 if (n.className === "message" || n.className === "message me") {
+                    const atBottom = isAtBottom();
                     const pre = find(n.children, c => c.nodeName === "PRE" && c.className === "text");
                     if (emojiRe.test(pre.textContent)) {
                         pre.innerHTML = pre.innerHTML.replace(
                             emojiRe,
                             match =>
                                 match in emojiData ?
-                                    '<span class="emoji">' + emojiData[match] + '</span>' :
+                                    '<span class="emoji">' + emojiData[match] + "</span>" :
                                     match
                         );
+
+                        if (atBottom) {
+                            window.scrollTo(0, document.body.scrollHeight)
+                        }
                     }
                 }
             });
