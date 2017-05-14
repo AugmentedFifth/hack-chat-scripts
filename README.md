@@ -6,7 +6,7 @@
 
 Adds emoji support to hack.chat, automatically replacing emoji shorthand codes like `:shrug:` or `:thumbsdown_tone4:` with their respective Unicode code point(s).
 
-Also provides suggestions, so that when a user starts typign an emoji shortcode, they receive a dynamically appearing box with suggestions and previews for each one. Users can click an option in the box to autocomplete, or press the Tab key to autocomplete with the closest match.
+Also provides suggestions, so that when a user starts typing an emoji shortcode, they receive a dynamically appearing box with suggestions and previews for each one. Users can click an option in the box to autocomplete, or press the Tab key to autocomplete with the closest match.
 
 ## hack-chat-notifications.js
 
