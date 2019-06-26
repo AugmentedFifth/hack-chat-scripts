@@ -108,16 +108,23 @@
         mutations.forEach(mutation => {
             const ns = mutation.addedNodes;
             ns.forEach(n => {
-                if (n.className === "message" || n.className === "message me") {
+                if (
+                    n.className === "message" ||
+                    n.className === "message me"
+                ) {
                     const atBottom = isAtBottom();
-                    const pre = find(n.children, c => c.nodeName === "PRE" && c.className === "text");
+                    const pre = find(
+                        n.children,
+                        c => c.nodeName === "PRE" && c.className === "text"
+                    );
                     if (emojiRe.test(pre.textContent)) {
                         pre.innerHTML = pre.innerHTML.replace(
                             emojiRe,
-                            match =>
-                                match in emojiData ?
-                                    '<span class="emoji">' + emojiData[match] + "</span>" :
-                                    match
+                            match => match in emojiData
+                                ? '<span class="emoji">' +
+                                      emojiData[match] +
+                                      "</span>"
+                                : match
                         );
 
                         if (atBottom) {
@@ -174,12 +181,12 @@
     }
     `);
 
-    const container = document.getElementById("footer").firstChild;
+    const container = document.getElementById("footer").firstElementChild;
     const suggestionUl = document.createElement("ul");
     suggestionUl.setAttribute("id", "emoji-suggestions");
     suggestionUl.style.display = "none";
 
-    container.insertBefore(suggestionUl, container.firstChild);
+    container.insertBefore(suggestionUl, container.firstElementChild);
 
     const shortCodeTrie = new Trie();
     Object.keys(emojiData).forEach(shortCode => shortCodeTrie.add(shortCode));
@@ -195,28 +202,40 @@
         const emojiStartMatch = emojiStartRe.exec(textArea.value);
         if (emojiStartMatch) {
             const emojiStart = emojiStartMatch[0].toLowerCase();
-            const prefixCompletions = shortCodeTrie.getPrefixCompletions(emojiStart);
+            const prefixCompletions =
+                shortCodeTrie.getPrefixCompletions(emojiStart);
             if (prefixCompletions.length > 0) {
                 suggestionUl.innerHTML = "";
                 prefixCompletions.sort((pc1, pc2) => pc1.length - pc2.length);
-                for (let i = prefixCompletions.length - 1, n = 0; n < 20 && i >= 0; --i) {
+                for (
+                    let i = prefixCompletions.length - 1, n = 0;
+                    n < 20 && i >= 0;
+                    --i
+                ) {
                     const pc = prefixCompletions[i];
                     const shortCode = emojiStart + pc;
 
                     const li = document.createElement("li");
                     li.classList.add("suggestion");
                     li.addEventListener("click", () => {
-                        textArea.value = textArea.value.replace(emojiStartRe, shortCode);
+                        textArea.value = textArea.value.replace(
+                            emojiStartRe,
+                            shortCode
+                        );
                         suggestionUl.style.display = "none";
                     });
 
                     const emojiHolder = document.createElement("span");
                     emojiHolder.classList.add("emoji-holder");
-                    emojiHolder.appendChild(document.createTextNode(emojiData[shortCode]));
+                    emojiHolder.appendChild(
+                        document.createTextNode(emojiData[shortCode])
+                    );
 
                     const shortCodeHolder = document.createElement("span");
                     shortCodeHolder.classList.add("short-code-holder");
-                    shortCodeHolder.appendChild(document.createTextNode(shortCode));
+                    shortCodeHolder.appendChild(
+                        document.createTextNode(shortCode)
+                    );
 
                     li.appendChild(emojiHolder);
                     li.appendChild(shortCodeHolder);
@@ -243,7 +262,10 @@
                 suggestionUl.style.display = "none";
                 break;
             case "Tab":
-                textArea.value = textArea.value.replace(emojiStartRe, suggestionUl.lastChild.lastChild.textContent);
+                textArea.value = textArea.value.replace(
+                    emojiStartRe,
+                    suggestionUl.lastChild.lastChild.textContent
+                );
                 suggestionUl.style.display = "none";
                 break;
         }
